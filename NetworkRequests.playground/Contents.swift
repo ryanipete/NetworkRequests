@@ -27,12 +27,7 @@ let wsURL = URL(string: "ws://localhost:10000")!
 // Scratch pad >>>
 // ===================================================================================
 
-
-
-//runDownloadTaskOne()
-runWebSocketTaskOne()
-
-
+runUploadTaskFour()
 
 // ===================================================================================
 // <<< Scratch pad
@@ -97,7 +92,7 @@ func runDataTaskFour() {
 /// Delegate-based, accepts a `URLRequest` and a local file `URL` to upload.
 func runUploadTaskOne() {
 
-    let url = httpURL.appendingPathComponent("post")
+    let url = httpURL.appendingPathComponent("anything")
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
 
@@ -153,8 +148,11 @@ func runUploadTaskFour() {
 
     let fileURL = Bundle.main.url(forResource: "150", withExtension: "png")!
 
-    session.uploadTask(with: request, fromFile: fileURL) { _, _, _ in
+    session.uploadTask(with: request, fromFile: fileURL) { data, urlResponse, error in
         print("[\(Thread.current.number)] Task · completionHandler")
+
+        let bodyStr = String(data: data!, encoding: .utf8)
+        print("[RP] bodyStr: \(String(describing: bodyStr))")
     }.resume()
 }
 
